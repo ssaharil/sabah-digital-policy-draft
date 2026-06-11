@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 7 — Citizen Engagement Strategy | Sabah State Digital Policy</title>
+  <style>
+
+    :root {
+      --navy:      #1e3a5c;
+      --navy-mid:  #2a4f7c;
+      --navy-dark: #142840;
+      --gold:      #b8892a;
+      --text:      #1a1a2e;
+      --muted:     #5a6377;
+      --border:    #d6dbe6;
+      --bg-screen: #edf1f7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+      font-size: 10.5pt;
+      color: var(--text);
+      line-height: 1.65;
+      background: var(--bg-screen);
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--navy-dark); color: white;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 24px; font-size: 9.5pt; gap: 16px;
+    }
+    .toolbar p { opacity: 0.8; }
+    .btn-print {
+      flex-shrink: 0; background: var(--gold); color: white; border: none;
+      padding: 8px 18px; border-radius: 4px; font-size: 9.5pt;
+      font-weight: 600; cursor: pointer;
+    }
+    .btn-print:hover { background: #9a7322; }
+
+    /* ── Document wrapper ── */
+    .doc-wrapper {
+      display: flex; max-width: 210mm; min-height: 297mm;
+      margin: 28px auto 60px; background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+    }
+    .doc-content { flex: 1; padding: 14mm 12mm 14mm 14mm; min-width: 0; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 50mm; flex-shrink: 0; background: #f7f8fb;
+      border-left: 3px solid var(--gold); color: var(--text);
+      display: flex; flex-direction: column; padding: 14mm 7mm 10mm;
+    }
+    .sb-badge {
+      display: inline-block; background: transparent; color: var(--gold);
+      border: 1.5px solid var(--gold); font-size: 7pt; font-weight: 700;
+      letter-spacing: 1.2px; padding: 2px 7px; border-radius: 2px;
+      text-align: center; margin-bottom: 10mm;
+    }
+    .sb-label { font-size: 6.5pt; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .sb-title { font-size: 9.5pt; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 8mm; }
+    .sb-rule      { height: 1px; background: var(--border); margin: 5mm 0; }
+    .sb-rule-gold { height: 1px; background: var(--gold);   margin: 5mm 0; }
+    .sb-field     { margin-bottom: 5mm; }
+    .sb-value     { font-size: 8.5pt; color: var(--text); line-height: 1.4; }
+    .sb-spacer    { flex: 1; }
+    .sb-footer-note { font-size: 6.5pt; color: var(--muted); line-height: 1.5; margin-top: 5mm; }
+
+    /* ── Typography ── */
+    h1 { font-size: 18pt; color: var(--navy); font-weight: 700; line-height: 1.2; margin-bottom: 5px; }
+    h2 { font-size: 12pt; color: var(--navy); font-weight: 700; margin: 16px 0 7px; padding-bottom: 4px; border-bottom: 2px solid var(--border); }
+    h3 { font-size: 10pt; color: var(--navy); font-weight: 700; margin: 12px 0 5px; }
+    p  { margin-bottom: 8px; text-align: justify; }
+    ul, ol { margin: 4px 0 6px 16px; }
+    ul li, ol li { margin-bottom: 3px; }
+
+    .meta { color: var(--muted); font-size: 8pt; margin-bottom: 16px; }
+    .meta span + span::before { content: ' · '; opacity: 0.4; }
+
+    .badge {
+      display: inline-block; background: transparent; color: var(--gold);
+      border: 1.5px solid var(--gold); font-size: 7.5pt; font-weight: 700;
+      padding: 2px 7px; border-radius: 2px; letter-spacing: 0.8px;
+    }
+    .cover-rule { width: 36px; height: 3px; background: var(--gold); margin: 10px 0 14px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .end-mark { text-align: center; color: var(--muted); font-size: 8pt; margin-top: 28px; letter-spacing: 1px; }
+
+    .pbm {
+      margin: 18px -12mm 18px -14mm; padding: 6px 14mm; background: #f4f6fb;
+      border-top: 2px dashed #c5cdd9; border-bottom: 2px dashed #c5cdd9;
+      font-size: 7.8pt; color: var(--muted); font-style: italic;
+    }
+    .sb-section { }
+
+    /* ── Cover page ── */
+    .cover-page { display: flex; flex-direction: column; min-height: 250mm; }
+    .cover-logo-row { display: flex; align-items: center; gap: 8mm; padding-bottom: 7mm; border-bottom: 3px solid var(--gold); margin-bottom: 10mm; }
+    .cover-logo-row img {
+      width: 22mm;
+      height: 22mm;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .cover-org-name { font-size: 12pt; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .cover-org-sub  { font-size: 9pt; color: var(--muted); margin-top: 2px; }
+    .cover-doc-type { font-size: 7.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 5mm; }
+    .cover-title    { font-size: 22pt; color: var(--navy); font-weight: 700; line-height: 1.2; margin-bottom: 5mm; }
+    .cover-chapter  { font-size: 13pt; color: var(--navy-mid); font-weight: 600; margin-bottom: 4mm; }
+    .cover-ref      { font-size: 8.5pt; color: var(--muted); }
+    .cover-spacer   { flex: 1; min-height: 10mm; }
+    .sig-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+    .sig-block { border: 1px solid var(--border); border-radius: 3px; padding: 6mm 7mm 5mm; }
+    .sig-role  { font-size: 8.5pt; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18mm; }
+    .sig-line  { border-bottom: 1px solid var(--navy); margin-bottom: 4mm; }
+    .sig-field { font-size: 7.5pt; color: var(--muted); margin-bottom: 3mm; }
+
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 9.5pt; }
+    th { background: var(--navy); color: #fff; font-weight: 700; padding: 8px 10px; text-align: left; }
+    td { border: 1px solid var(--border); padding: 7px 10px; vertical-align: top; }
+    tr:nth-child(even) td { background: #f7f8fb; }
+    td:first-child { font-weight: 600; color: var(--navy-dark); }
+
+    /* ── Target group tags ── */
+    .group-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .group-tag {
+      background: #eef1f7;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--navy);
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 9pt;
+      font-weight: 600;
+      color: var(--navy-dark);
+    }
+
+    /* ── Metric list ── */
+    .metric-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+    .metric-item {
+      background: #f0f7ef;
+      border: 1px solid #c6ddc4;
+      border-left: 3px solid #4a8c47;
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 9pt;
+      color: #1a3a19;
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { background: white; font-size: 10pt; padding-right: 55mm; }
+      .toolbar { display: none !important; }
+      .pbm     { display: none !important; }
+      .doc-wrapper { display: block !important; max-width: none !important; min-height: auto !important; margin: 0 !important; box-shadow: none !important; background: transparent !important; }
+      .doc-content { padding: 0 !important; }
+      .sb-section  { break-before: page; page-break-before: always; }
+      .cover-page  { height: 267mm; min-height: unset; break-after: page; page-break-after: always; }
+      .sidebar {
+        position: fixed; right: 0; top: 0; bottom: 0; width: 50mm;
+        display: flex !important; flex-direction: column; padding: 14mm 7mm 10mm;
+        background: #f7f8fb; border-left: 3px solid var(--gold); color: var(--text);
+      }
+      @page { size: A4 portrait; margin: 15mm; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <p>Sabah State Digital Policy — Chapter 7: Citizen Engagement Strategy &nbsp;|&nbsp; JPANS, Bahagian Kerajaan Digital</p>
+    <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+  </div>
+
+  <div class="doc-wrapper">
+    <div class="doc-content">
+
+      <!-- ══════════════════════════════════════
+           PAGE 0 — COVER
+      ══════════════════════════════════════ -->
+      <div class="cover-page">
+        <div class="cover-logo-row">
+                    <img src="images/jpan_logo.png" alt="Jabatan Perkhidmatan Awam Negeri Sabah Logo">
+          <div>
+            <div class="cover-org-name">Jabatan Perkhidmatan Awam Negeri Sabah</div>
+            <div class="cover-org-sub">Bahagian Kerajaan Digital</div>
+          </div>
+        </div>
+        <div class="cover-doc-type">Polisi Kerajaan Digital</div>
+        <div class="cover-title">Sabah State<br>Digital Policy</div>
+        <div class="cover-chapter">Bab 7 — Citizen Engagement Strategy</div>
+        <div class="cover-rule"></div>
+        <div class="cover-ref">Rujukan: JPANS/BKD/SDGI/007 &nbsp;·&nbsp; Versi 1.0 (Draf) &nbsp;·&nbsp; 2025</div>
+        <div class="cover-spacer"></div>
+        <div class="sig-grid">
+          <div class="sig-block">
+            <div class="sig-role">Disediakan oleh</div>
+            <div class="sig-line"></div>
+            <div class="sig-field">Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Jawatan &nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Tarikh &nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+          </div>
+          <div class="sig-block">
+            <div class="sig-role">Disahkan oleh</div>
+            <div class="sig-line"></div>
+            <div class="sig-field">Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Jawatan &nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Tarikh &nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+          </div>
+        </div>
+      </div><!-- /.cover-page -->
+
+      <div class="pbm">✂ &nbsp; Page break — Page 1 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 1
+      ══════════════════════════════════════ -->
+      <span class="badge">Page 1</span><br><br>
+
+      <h1>7. Citizen Engagement Strategy</h1>
+      <div class="cover-rule"></div>
+      <p class="meta">
+        <span>Rujukan: JPANS/BKD/SDGI/007</span>
+        <span>Versi 1.0 (Draf)</span>
+        <span>SDGI Roadmap 2020–2030</span>
+      </p>
+
+      <h2>7.1 Purpose</h2>
+      <p>The success of Sabah's digital transformation depends not only on robust infrastructure and systems but also on the willingness and ability of citizens to adopt and utilize digital government services. This section outlines a comprehensive citizen engagement strategy aimed at building awareness, trust, and participation among Sabah's diverse population.</p>
+
+      <h2>7.2 Objectives of Citizen Engagement</h2>
+      <table>
+        <thead>
+          <tr><th>Objectives</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Raise Awareness</td><td>Educate citizens about available digital services and their benefits.</td></tr>
+          <tr><td>Build Trust</td><td>Ensure transparency, security, and privacy to foster confidence in digital systems.</td></tr>
+          <tr><td>Promote Adoption</td><td>Encourage active use of digital tools such as Sabah Digital ID and online service portals.</td></tr>
+          <tr><td>Support Inclusion</td><td>Ensure underserved groups (e.g., rural communities, elderly, indigenous populations) are not left behind.</td></tr>
+          <tr><td>Enable Feedback</td><td>Create channels for citizens to provide input and report issues with digital services.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>7.3 Target Groups</h2>
+      <p>Each group may require tailored communication and support strategies:</p>
+      <div class="group-list">
+        <div class="group-tag">Urban vs. Rural Populations</div>
+        <div class="group-tag">Youth vs. Elderly</div>
+        <div class="group-tag">Indigenous Communities</div>
+        <div class="group-tag">Low-income Groups</div>
+        <div class="group-tag">Business Owners &amp; Entrepreneurs</div>
+      </div>
+
+      <div class="pbm">✂ &nbsp; Page break — Page 2 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 2
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 2</span>
+
+        <h2>7.4 Key Strategies &amp; Initiatives</h2>
+
+        <h3>7.4.1 Public Awareness Campaign</h3>
+        <ul>
+          <li>Launch multi-channel campaigns via social media and local influencers.</li>
+          <li>Use local dialects and culturally appropriate messaging.</li>
+          <li>Highlight real-life success stories (e.g., faster processing times, reduced travel).</li>
+        </ul>
+
+        <h3>7.4.2 Digital Literacy Programs</h3>
+        <ul>
+          <li>Collaborate with INSAN to deliver basic digital skills training.</li>
+          <li>Focus on using digitalization tools to access e-services.</li>
+        </ul>
+
+        <h3>7.4.3 Pilot Districts and Champions</h3>
+        <ul>
+          <li>Select pilot districts to demonstrate successful digital service delivery.</li>
+          <li>Use these zones to refine processes before scaling statewide.</li>
+        </ul>
+
+        <h2>7.5 Monitoring and Evaluation</h2>
+        <p>Track metrics such as:</p>
+        <div class="metric-list">
+          <span class="metric-item">Number of Sabah Digital ID registrations</span>
+          <span class="metric-item">Usage statistics of Digital Sabah's systems</span>
+          <span class="metric-item">User satisfaction ratings</span>
+        </div>
+        <p>Adjust engagement strategies based on performance data.</p>
+
+        <p class="end-mark">— End of Chapter 7: Citizen Engagement Strategy —</p>
+
+      </div><!-- end page 2 -->
+
+    </div><!-- /.doc-content -->
+
+
+    <!-- ══════════════════════════════════════
+         SIDEBAR
+    ══════════════════════════════════════ -->
+    <aside class="sidebar">
+
+      <div class="sb-badge">RASMI</div>
+
+      <div class="sb-field">
+        <div class="sb-label">Dokumen</div>
+        <div class="sb-title">Sabah State Digital Policy</div>
+      </div>
+
+      <div class="sb-rule-gold"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Bab</div>
+        <div class="sb-value">7 — Citizen Engagement Strategy</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Organisasi</div>
+        <div class="sb-value">Jabatan Perkhidmatan Awam Negeri Sabah</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Bahagian</div>
+        <div class="sb-value">Bahagian Kerajaan Digital</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Rujukan</div>
+        <div class="sb-value">JPANS/BKD/SDGI/007</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Tarikh</div>
+        <div class="sb-value">2025</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Versi</div>
+        <div class="sb-value">1.0 (Draf)</div>
+      </div>
+
+      <div class="sb-spacer"></div>
+
+      <div class="sb-rule-gold"></div>
+      <div class="sb-footer-note">
+        Dokumen draf — tidak untuk edaran awam.<br>
+        Sabah Digital Government Innovation (SDGI) Roadmap 2020–2030.
+      </div>
+
+    </aside>
+
+  </div><!-- /.doc-wrapper -->
+
+</body>
+</html>
