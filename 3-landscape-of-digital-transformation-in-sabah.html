@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Landscape of Digital Transformation in Sabah — Sabah State Digital Policy</title>
+  <style>
+
+    :root {
+      --navy:      #1e3a5c;
+      --navy-mid:  #2a4f7c;
+      --navy-dark: #142840;
+      --gold:      #b8892a;
+      --text:      #1a1a2e;
+      --muted:     #5a6377;
+      --border:    #d6dbe6;
+      --bg-screen: #edf1f7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+      font-size: 10.5pt;
+      color: var(--text);
+      line-height: 1.65;
+      background: var(--bg-screen);
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--navy-dark); color: white;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 24px; font-size: 9.5pt; gap: 16px;
+    }
+    .toolbar p { opacity: 0.8; }
+    .btn-print {
+      flex-shrink: 0; background: var(--gold); color: white; border: none;
+      padding: 8px 18px; border-radius: 4px; font-size: 9.5pt;
+      font-weight: 600; cursor: pointer;
+    }
+    .btn-print:hover { background: #9a7322; }
+
+    /* ── Document wrapper ── */
+    .doc-wrapper {
+      display: flex; max-width: 210mm; min-height: 297mm;
+      margin: 28px auto 60px; background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+    }
+
+    /* ── Content area ── */
+    .doc-content { flex: 1; padding: 14mm 12mm 14mm 14mm; min-width: 0; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 50mm; flex-shrink: 0; background: #f7f8fb;
+      border-left: 3px solid var(--gold); color: var(--text);
+      display: flex; flex-direction: column; padding: 14mm 7mm 10mm;
+    }
+    .sb-badge {
+      display: inline-block; background: transparent; color: var(--gold);
+      border: 1.5px solid var(--gold); font-size: 7pt; font-weight: 700;
+      letter-spacing: 1.2px; padding: 2px 7px; border-radius: 2px;
+      text-align: center; margin-bottom: 10mm;
+    }
+    .sb-label { font-size: 6.5pt; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .sb-title { font-size: 9.5pt; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 8mm; }
+    .sb-rule      { height: 1px; background: var(--border); margin: 5mm 0; }
+    .sb-rule-gold { height: 1px; background: var(--gold);   margin: 5mm 0; }
+    .sb-field     { margin-bottom: 5mm; }
+    .sb-value     { font-size: 8.5pt; color: var(--text); line-height: 1.4; }
+    .sb-spacer    { flex: 1; }
+    .sb-footer-note { font-size: 6.5pt; color: var(--muted); line-height: 1.5; margin-top: 5mm; }
+
+    /* ── Typography ── */
+    h1 { font-size: 18pt; color: var(--navy); font-weight: 700; line-height: 1.2; margin-bottom: 5px; }
+    h2 { font-size: 12pt; color: var(--navy); font-weight: 700; margin: 16px 0 7px; padding-bottom: 4px; border-bottom: 2px solid var(--border); }
+    h3 { font-size: 10pt; color: var(--navy); font-weight: 700; margin: 12px 0 5px; }
+    p  { margin-bottom: 8px; text-align: justify; }
+    ul { margin: 5px 0 9px 16px; }
+    ul li { margin-bottom: 4px; }
+
+    .meta { color: var(--muted); font-size: 8pt; margin-bottom: 16px; }
+    .meta span + span::before { content: ' · '; opacity: 0.4; }
+
+    .callout {
+      border-left: 4px solid var(--gold); background: #fdf8ef;
+      padding: 9px 12px; border-radius: 0 4px 4px 0; margin: 11px 0; font-size: 9.5pt;
+    }
+    .callout strong { color: var(--navy); }
+
+    table.dt { width: 100%; border-collapse: collapse; margin: 9px 0; font-size: 8.8pt; }
+    table.dt thead th {
+      background: transparent; color: var(--navy); padding: 6px 9px;
+      text-align: left; font-weight: 700; font-size: 8pt; border-bottom: 2px solid var(--navy);
+    }
+    table.dt tbody td { padding: 6px 9px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    table.dt tbody tr:nth-child(even) td { background: #f8f9fc; }
+
+    .badge {
+      display: inline-block; background: transparent; color: var(--gold);
+      border: 1.5px solid var(--gold); font-size: 7.5pt; font-weight: 700;
+      padding: 2px 7px; border-radius: 2px; letter-spacing: 0.8px;
+    }
+    .cover-rule { width: 36px; height: 3px; background: var(--gold); margin: 10px 0 14px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .end-mark { text-align: center; color: var(--muted); font-size: 8pt; margin-top: 28px; letter-spacing: 1px; }
+
+    .pbm {
+      margin: 18px -12mm 18px -14mm; padding: 6px 14mm; background: #f4f6fb;
+      border-top: 2px dashed #c5cdd9; border-bottom: 2px dashed #c5cdd9;
+      font-size: 7.8pt; color: var(--muted); font-style: italic;
+    }
+
+    .sb-section { }
+
+    /* ── Cover page ── */
+    .cover-page { display: flex; flex-direction: column; min-height: 250mm; }
+    .cover-logo-row { display: flex; align-items: center; gap: 8mm; padding-bottom: 7mm; border-bottom: 3px solid var(--gold); margin-bottom: 10mm; }
+    .cover-logo-row img {
+      width: 22mm;
+      height: 22mm;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .cover-org-name { font-size: 12pt; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .cover-org-sub  { font-size: 9pt; color: var(--muted); margin-top: 2px; }
+    .cover-doc-type { font-size: 7.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 5mm; }
+    .cover-title    { font-size: 22pt; color: var(--navy); font-weight: 700; line-height: 1.2; margin-bottom: 5mm; }
+    .cover-ref      { font-size: 8.5pt; color: var(--muted); }
+    .cover-spacer   { flex: 1; min-height: 10mm; }
+    .sig-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+    .sig-block { border: 1px solid var(--border); border-radius: 3px; padding: 6mm 7mm 5mm; }
+    .sig-role  { font-size: 8.5pt; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18mm; }
+    .sig-line  { border-bottom: 1px solid var(--navy); margin-bottom: 4mm; }
+    .sig-field { font-size: 7.5pt; color: var(--muted); margin-bottom: 3mm; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: white; font-size: 10pt; padding-right: 55mm; }
+      .toolbar { display: none !important; }
+      .pbm     { display: none !important; }
+      .doc-wrapper { display: block !important; max-width: none !important; min-height: auto !important; margin: 0 !important; box-shadow: none !important; background: transparent !important; }
+      .doc-content { padding: 0 !important; }
+      .sb-section  { break-before: page; page-break-before: always; }
+      .cover-page  { height: 267mm; min-height: unset; break-after: page; page-break-after: always; }
+      .sidebar {
+        position: fixed; right: 0; top: 0; bottom: 0; width: 50mm;
+        display: flex !important; flex-direction: column; padding: 14mm 7mm 10mm;
+        background: #f7f8fb; border-left: 3px solid var(--gold); color: var(--text);
+      }
+      @page { size: A4 portrait; margin: 15mm; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <p>Sabah State Digital Policy — Chapter 3: The Landscape of Digital Transformation in Sabah &nbsp;|&nbsp; JPANS, Bahagian Kerajaan Digital</p>
+    <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+  </div>
+
+  <div class="doc-wrapper">
+    <div class="doc-content">
+
+      <!-- ══════════════════════════════════════
+           PAGE 0 — COVER
+      ══════════════════════════════════════ -->
+      <div class="cover-page">
+        <div class="cover-logo-row">
+                    <img src="images/jpan_logo.png" alt="Jabatan Perkhidmatan Awam Negeri Sabah Logo">
+          <div>
+            <div class="cover-org-name">Jabatan Perkhidmatan Awam Negeri Sabah</div>
+            <div class="cover-org-sub">Bahagian Kerajaan Digital</div>
+          </div>
+        </div>
+        <div class="cover-doc-type">Polisi Kerajaan Digital</div>
+        <div class="cover-title">Sabah State<br>Digital Policy</div>
+        <div style="font-size:13pt; color:var(--navy-mid); font-weight:600; margin-bottom:4mm;">
+          Chapter 3 — The Landscape of Digital Transformation in Sabah
+        </div>
+        <div class="cover-ref">Rujukan: JPANS/BKD/SDGI/003 &nbsp;·&nbsp; Versi 1.0 (Draf) &nbsp;·&nbsp; Mei 2025</div>
+        <div class="cover-spacer"></div>
+        <div class="sig-grid">
+          <div class="sig-block">
+            <div class="sig-role">Disediakan oleh</div>
+            <div class="sig-line"></div>
+            <div class="sig-field">Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Jawatan &nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Tarikh &nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+          </div>
+          <div class="sig-block">
+            <div class="sig-role">Disahkan oleh</div>
+            <div class="sig-line"></div>
+            <div class="sig-field">Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Jawatan &nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Tarikh &nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+          </div>
+        </div>
+      </div><!-- /.cover-page -->
+
+      <div class="pbm">✂ &nbsp; Page break — Page 1 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 1 — 3.1 Development (Early ICT + Bridging the Divide)
+      ══════════════════════════════════════ -->
+      <span class="badge">Page 1</span><br><br>
+
+      <h1>The Landscape of Digital<br>Transformation in Sabah</h1>
+      <div class="cover-rule"></div>
+      <p class="meta">
+        <span>Sabah State Digital Policy</span>
+        <span>JPANS/BKD/SDGI/003</span>
+        <span>Mei 2025</span>
+      </p>
+
+      <h2>3.1 Development of Digital Transformation in Sabah</h2>
+
+      <p>Digital transformation has become a cornerstone of modern development, reshaping economies, societies, and governance structures worldwide. In Sabah, Malaysia, the journey toward digital transformation has been a gradual but significant process, evolving from early Information and Communication Technology (ICT) adoption to the current efforts aimed at creating a digitally empowered society.</p>
+
+      <h3>3.1.1 Early ICT Adoption in Sabah</h3>
+
+      <p>The foundation of digital transformation in Sabah was laid in the late 1990s and early 2000s, coinciding with Malaysia's broader push toward becoming a knowledge-based economy. During this period, the Malaysian government introduced initiatives such as the <strong>Multimedia Super Corridor (MSC)</strong>, which aimed to attract technology investments and foster ICT development. Sabah, though geographically distant from the country's economic hubs, began to adopt ICT infrastructure and services as part of this national agenda.</p>
+
+      <p>Early efforts focused on improving connectivity and access to basic ICT tools. Telecommunication networks were expanded, and internet access was introduced in urban centres such as Kota Kinabalu, Sandakan, and Tawau. Schools and government offices were equipped with computers, and basic digital literacy programmes were introduced. However, progress was uneven, with rural and remote areas lagging due to infrastructural challenges and limited resources.</p>
+
+      <h3>3.1.2 Bridging the Digital Divide</h3>
+
+      <p>As the 2000s progressed, the need to bridge the digital divide between urban and rural areas became a priority. The Malaysian government, in collaboration with state authorities, launched initiatives to extend internet connectivity and digital services to underserved communities. Programmes such as the <strong>Universal Service Provision (USP) fund</strong> were instrumental in deploying broadband infrastructure in rural Sabah, enabling schools, clinics, and community centres to access the internet.</p>
+
+      <p>During this phase, digital literacy campaigns gained momentum, targeting not only students but also adults and small business owners. The introduction of community internet centres and mobile digital units helped bring technology closer to rural populations. These efforts were complemented by state-level policies that emphasised the importance of ICT in driving economic growth and improving public service delivery.</p>
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 2 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 2 — 3.1.3 E-Gov + 3.1.4 Current Efforts
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 2</span>
+
+        <h3 style="margin-top:10px;">3.1.3 The Rise of E-Government and Smart Initiatives</h3>
+
+        <p>By the 2010s, Sabah began to embrace e-government initiatives as part of its digital transformation journey. The state government introduced online platforms for citizen services, such as tax payments, business registrations, and licence renewals. These efforts aimed to enhance efficiency, reduce bureaucracy, and improve transparency. Additionally, the adoption of Geographic Information Systems (GIS) and data analytics tools enabled better urban planning and resource management.</p>
+
+        <p>The concept of "smart cities" also gained traction during this period. Kota Kinabalu, as the state capital, became a focal point for smart city initiatives, including the deployment of smart traffic management systems, energy-efficient infrastructure, and digital public services. These projects were supported by partnerships between the government, private sector, and international organisations, reflecting a collaborative approach to digital transformation.</p>
+
+        <h3>3.1.4 Current Digital Transformation Efforts</h3>
+
+        <p>In recent years, Sabah's digital transformation efforts have accelerated, driven by the global shift toward Industry 4.0 and the increasing importance of digital technologies in addressing socio-economic challenges. The state government has prioritised digitalisation across various sectors, including agriculture, tourism, education, and healthcare. For instance, digital tools are being used to modernise agriculture through precision farming and supply chain optimisation, while the tourism sector is leveraging digital marketing and virtual reality to attract visitors.</p>
+
+        <p>The <strong>COVID-19 pandemic</strong> further underscored the importance of digital transformation, prompting a rapid adoption of digital solutions in education, remote work, and e-commerce. Online learning platforms, telehealth services, and digital payment systems became essential, highlighting both the potential and the gaps in Sabah's digital infrastructure. In response, the state government has intensified efforts to improve internet connectivity, particularly in rural areas, and to promote digital skills training.</p>
+
+        <div class="callout">
+          <strong>Key milestone:</strong> The COVID-19 pandemic served as a catalyst, compressing years of digital adoption into months and permanently shifting citizen expectations for accessible, online government services.
+        </div>
+      </div><!-- end page 2 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 3 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 3 — 3.2 Current Situation Analysis (Agency Readiness + Service Delivery)
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 3</span>
+
+        <h2 style="margin-top:10px;">3.2 Current Situation Analysis</h2>
+
+        <p>The digital transformation of government services is a critical step towards achieving efficiency, transparency, and improved public service delivery. The current situation analysis focuses on four key areas, each playing a pivotal role in determining the success of Sabah's digital transformation efforts.</p>
+
+        <h3>3.2.1 Government Agency Readiness</h3>
+
+        <p>Government Agency Readiness refers to the ability of Sabah's government agencies to adopt and implement digital technologies effectively. Currently, agencies are at varying stages of digital readiness — while some have embraced digital tools and platforms, others still rely heavily on manual processes and outdated systems.</p>
+
+        <p>One of the primary challenges is the <strong>lack of a unified digital strategy</strong> across all agencies. This disparity creates inefficiencies and hampers collaboration. Additionally, there is a need for continuous training and upskilling of employees, and investment in modern infrastructure such as high-speed internet and cloud computing is essential to support the digital transformation journey.</p>
+
+        <h3>3.2.2 Public Service Delivery</h3>
+
+        <p>The current evaluation of public services reveals both strengths and areas for improvement. On the positive side, there have been notable efforts to digitise certain services, such as online permit applications and e-payment systems, which have improved accessibility and convenience for the public.</p>
+
+        <p>However, significant gaps remain. Many services are still not fully digitised, leading to delays and inefficiencies — the processing of documents and approvals often requires physical submissions. Furthermore, there is a <strong>lack of integration between different service platforms</strong>, resulting in a fragmented user experience. A more comprehensive approach is needed to streamline processes, enhance user interfaces, and ensure all services are accessible to all segments of the population, including those in rural areas.</p>
+      </div><!-- end page 3 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 4 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 4 — 3.2.3 Data Management + 3.2.4 Smart City
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 4</span>
+
+        <h3 style="margin-top:10px;">3.2.3 Data Management</h3>
+
+        <p>Data Management is a critical component of digital transformation, as it underpins decision-making and service delivery. In Sabah, the current state of data integration and interoperability across government agencies presents a mixed picture — while some agencies have made progress in digitising their data, others still struggle with data silos and inconsistent data standards.</p>
+
+        <p>The <strong>lack of a centralised data management framework</strong> is a major challenge, hindering the ability to share data across agencies and leading to duplication of efforts. Additionally, data security and privacy concerns need to be addressed to build public trust in digital services. Sabah's government should prioritise developing a unified data governance framework with standardised formats, robust security measures, and clear protocols for data sharing.</p>
+
+        <h3>3.2.4 Smart City Initiatives</h3>
+
+        <p>Smart City Initiatives are a key aspect of Sabah's digital transformation strategy, particularly in selected districts. Currently, Sabah has made some progress implementing smart city projects, such as smart street lighting, traffic management systems, and waste management solutions.</p>
+
+        <p>However, progress is uneven, with some districts advancing more rapidly than others. Challenges such as limited funding, technical expertise, and public awareness have slowed implementation. To accelerate progress, greater collaboration between government, the private sector, and community stakeholders is needed, along with a <strong>clear roadmap with measurable goals and timelines</strong>.</p>
+
+        <table class="dt" style="margin-top:12px;">
+          <thead>
+            <tr><th>Focus Area</th><th>Current Status</th><th>Key Gap</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Agency Readiness</td><td>Varies by agency</td><td>No unified digital strategy</td></tr>
+            <tr><td>Service Delivery</td><td>Partial digitisation</td><td>Fragmented platforms; physical submissions still required</td></tr>
+            <tr><td>Data Management</td><td>Siloed systems</td><td>No centralised governance framework</td></tr>
+            <tr><td>Smart Cities</td><td>Pilot projects active</td><td>Uneven rollout; limited funding &amp; expertise</td></tr>
+          </tbody>
+        </table>
+      </div><!-- end page 4 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 5 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 5 — 3.3 Challenges (3.3.1–3.3.3)
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 5</span>
+
+        <h2 style="margin-top:10px;">3.3 Challenges in Adapting to Change</h2>
+
+        <h3>3.3.1 Infrastructure Limitations</h3>
+
+        <p>One of the most pressing challenges Sabah faces is the lack of robust digital infrastructure. While urban centres like Kota Kinabalu have seen improvements in internet connectivity and telecommunications, rural and remote areas still suffer from inadequate access to reliable internet and electricity. This digital divide hampers the state's ability to implement digital services uniformly across all regions.</p>
+
+        <p>The geographical terrain of Sabah — which includes mountainous regions and isolated islands — further complicates infrastructure deployment. Without significant investment in broadband networks, mobile connectivity, and power supply, Sabah risks being left behind in the global digital transformation.</p>
+
+        <h3>3.3.2 Data Integration Issues</h3>
+
+        <p>Many agencies and organisations operate in silos, with limited sharing of data and resources. This lack of integration leads to inefficiencies, duplication of efforts, and missed opportunities for data-driven decision-making. In healthcare, for example, the inability to integrate patient records across hospitals and clinics can result in delayed treatments. In urban planning, the absence of a centralised data system makes it difficult to coordinate development projects and address issues like traffic congestion and environmental degradation.</p>
+
+        <p>Overcoming these challenges requires the establishment of <strong>standardised data protocols, interoperable systems</strong>, and a culture of data sharing among stakeholders.</p>
+
+        <h3>3.3.3 Stakeholder Collaboration</h3>
+
+        <p>Effective digital transformation requires collaboration among government agencies, private sector players, non-governmental organisations (NGOs), and the public. However, achieving such collaboration has proven to be a significant challenge — different stakeholders often have conflicting priorities, limited resources, and varying levels of technological expertise.</p>
+
+        <p>Bridging these gaps requires strong leadership, clear communication, and the establishment of platforms for dialogue and cooperation. Without a unified approach, the digital transformation process in Sabah will remain fragmented and ineffective.</p>
+      </div><!-- end page 5 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 6 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 6 — 3.3.4 Public Adoption + 3.4 Steps (3.4.1–3.4.2)
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 6</span>
+
+        <h3 style="margin-top:10px;">3.3.4 Public Adoption of Digital Services</h3>
+
+        <p>Even if infrastructure, data integration, and stakeholder collaboration are addressed, the success of digital transformation ultimately depends on public adoption. In Sabah, a significant portion of the population is either unfamiliar with digital technologies or resistant to change — particularly among older generations and rural communities, where digital literacy rates are low.</p>
+
+        <p>Concerns about data privacy and cybersecurity further hinder public trust in digital services. To overcome this challenge, the state government must invest in digital literacy programmes, raise awareness about the benefits of digital services, and ensure robust cybersecurity measures are in place.</p>
+
+        <h2>3.4 Steps Towards Digital Transformation</h2>
+
+        <h3>3.4.1 Data Integration: Building a Connected Ecosystem</h3>
+
+        <p>One of the foundational steps towards digital transformation is the integration of data across various sectors. In Sabah, this involves creating a unified data infrastructure that allows seamless sharing and analysis of information between government agencies, businesses, and citizens. By implementing a centralised data management system, Sabah can improve transparency, reduce redundancy, and enhance collaboration.</p>
+
+        <p>Integrating data from agriculture, tourism, and environmental sectors can provide valuable insights for sustainable development. Farmers can access real-time weather data to optimise crop yields; tourism operators can use visitor statistics to tailor their services; and data integration can support disaster management by enabling faster response times during natural calamities.</p>
+
+        <h3>3.4.2 Smart Cities: Enhancing Urban Living</h3>
+
+        <p>The concept of smart cities is integral to Sabah's digital transformation, particularly as urbanisation accelerates in cities like Kota Kinabalu, Sandakan, and Tawau. Sabah can adopt smart city initiatives such as intelligent transportation systems, energy-efficient buildings, and digital public services.</p>
+
+        <p>For example, implementing a smart traffic management system in Kota Kinabalu can alleviate congestion and reduce carbon emissions. Smart energy grids can optimise electricity distribution, reducing waste and lowering costs for consumers. The state government should collaborate with private sector partners and international organisations to fund and implement these projects, ensuring they are scalable and sustainable.</p>
+      </div><!-- end page 6 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 7 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 7 — 3.4.3 Modernisation + 3.4.4 Change Management
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 7</span>
+
+        <h3 style="margin-top:10px;">3.4.3 Modernisation of Public Services: Empowering Citizens</h3>
+
+        <p>The modernisation of public services is a critical step in Sabah's digital transformation journey. By digitising government services, Sabah can improve efficiency, accessibility, and citizen satisfaction. Online platforms for services such as business registration, land ownership documentation, and healthcare appointments can reduce bureaucratic delays and eliminate the need for physical visits to government offices.</p>
+
+        <p>For rural communities where internet access may be limited, the state government can establish <strong>digital hubs</strong> equipped with computers and trained personnel to assist citizens in accessing online services. Mobile applications can provide real-time updates on public transportation, emergency alerts, and community programmes. Furthermore, leveraging artificial intelligence and chatbots can streamline customer service, ensuring that citizens receive timely and accurate information.</p>
+
+        <h3>3.4.4 Change Management: Driving Cultural and Behavioural Shifts</h3>
+
+        <p>Digital transformation extends beyond technology — it requires significant cultural and behavioural shifts among government employees, businesses, and citizens. While Sabah has made progress in modernising its digital infrastructure and services, long-term success depends on ensuring that people are ready, willing, and able to adopt new ways of working.</p>
+
+        <p>This strategy focuses on addressing common barriers to digital adoption — such as resistance to change, fear of complexity, and lack of awareness — through a structured approach to change management. It emphasises leadership, communication, training, and stakeholder engagement as core enablers of transformation.</p>
+
+        <p><strong>Key elements include:</strong></p>
+        <ul>
+          <li><strong>Leadership advocacy</strong> from senior officials to inspire confidence and set expectations</li>
+          <li><strong>Stakeholder involvement</strong> throughout the design and rollout of digital systems</li>
+          <li><strong>Targeted capacity-building programmes</strong> to equip civil servants with digital skills</li>
+          <li><strong>Public education campaigns</strong> to encourage citizen participation in digital services</li>
+          <li><strong>Recognition of champions and innovators</strong> to foster a culture of digital excellence</li>
+        </ul>
+
+        <div class="callout">
+          By embedding change management into the implementation framework, Sabah can ensure that digital transformation delivers lasting impact — not just short-term improvements.
+        </div>
+
+        <p class="end-mark">— End of Chapter 3: The Landscape of Digital Transformation in Sabah —</p>
+      </div><!-- end page 7 -->
+
+    </div><!-- /.doc-content -->
+
+
+    <!-- ══════════════════════════════════════
+         SIDEBAR
+    ══════════════════════════════════════ -->
+    <aside class="sidebar">
+
+      <div class="sb-badge">RASMI</div>
+
+      <div class="sb-field">
+        <div class="sb-label">Dokumen</div>
+        <div class="sb-title">Sabah State Digital Policy</div>
+      </div>
+
+      <div class="sb-rule-gold"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Bab</div>
+        <div class="sb-value">3 — The Landscape of Digital Transformation in Sabah</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Organisasi</div>
+        <div class="sb-value">Jabatan Perkhidmatan Awam Negeri Sabah</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Bahagian</div>
+        <div class="sb-value">Bahagian Kerajaan Digital</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Rujukan</div>
+        <div class="sb-value">JPANS/BKD/SDGI/003</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Tarikh</div>
+        <div class="sb-value">Mei 2025</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Versi</div>
+        <div class="sb-value">1.0 (Draf)</div>
+      </div>
+
+      <div class="sb-spacer"></div>
+
+      <div class="sb-rule-gold"></div>
+      <div class="sb-footer-note">
+        Dokumen draf — tidak untuk edaran awam.<br>
+        Sabah Digital Government Innovation (SDGI) Roadmap 2020–2030.
+      </div>
+
+    </aside>
+
+  </div><!-- /.doc-wrapper -->
+
+</body>
+</html>

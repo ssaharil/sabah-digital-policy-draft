@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>README – Sabah State Digital Policy (Draft)</title>
+  <style>
+    :root {
+      --blue:    #1a4f8a;
+      --blue-lt: #e8f0fb;
+      --gold:    #c8922a;
+      --text:    #1e2433;
+      --muted:   #5a6278;
+      --border:  #d6dce8;
+      --bg:      #f5f7fb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--blue);
+      color: #fff;
+      padding: 48px 40px 36px;
+    }
+    header .label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #a8c4e8;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    header p {
+      font-size: 15px;
+      color: #c8d8ee;
+      max-width: 680px;
+    }
+    .badge {
+      display: inline-block;
+      margin-top: 18px;
+      background: var(--gold);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 24px 60px;
+    }
+
+    /* ── Section titles ── */
+    h2 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--blue-lt);
+    }
+
+    /* ── Overview card ── */
+    .overview {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 24px 28px;
+      font-size: 15px;
+      color: var(--text);
+    }
+    .overview p + p { margin-top: 12px; }
+
+    /* ── Document table ── */
+    .doc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .doc-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 0 14px;
+      align-items: start;
+    }
+    .doc-num {
+      background: var(--blue-lt);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .doc-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--blue);
+    }
+    .doc-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── HTML version cards ── */
+    .html-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .html-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 13px 18px;
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 0 14px;
+      align-items: center;
+    }
+    .html-item .doc-num { margin-top: 0; }
+    .html-item .doc-title { font-size: 14px; }
+    .html-item .doc-desc { font-size: 13px; }
+    .html-link {
+      display: inline-block;
+      background: var(--blue-lt);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .html-link:hover { background: var(--blue); color: #fff; }
+
+    /* ── Folder structure ── */
+    .folder-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 2;
+    }
+    .folder-box .dir  { color: var(--blue); font-weight: 600; }
+    .folder-box .file { color: #333; }
+    .folder-box .note { color: var(--muted); font-style: italic; margin-left: 8px; }
+
+    /* ── Key themes ── */
+    .themes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .theme-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--blue);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .theme-card .icon { font-size: 22px; margin-bottom: 8px; }
+    .theme-card h3 { font-size: 13.5px; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
+    .theme-card p  { font-size: 13px; color: var(--muted); }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 24px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="label">Jabatan Kerajaan Digital · Sabah State Government</div>
+  <h1>Sabah State Digital Policy<br>— Draft Working Documents</h1>
+  <p>This folder contains the full draft manuscript of the <strong>Sabah Digital Government Innovation (SDGI)</strong> policy document, structured as nine sequential chapters covering the vision, strategy, governance, and implementation roadmap for Sabah's digital transformation.</p>
+  <span class="badge">Draft — Not for Public Distribution</span>
+</header>
+
+<main>
+
+  <h2>Overview</h2>
+  <div class="overview">
+    <p>The Sabah State Digital Policy articulates the state's commitment to advancing digital transformation under the <strong>SDGI Roadmap 2020–2030</strong>. The overarching journey is framed as a progression: <em>Automation → Innovation → Intelligence</em>, with the ultimate goal of building a data-driven, citizen-centric government guided by the <strong>5A principle</strong> — Accessible, by Anyone, at Anytime, Anywhere, and by Any Device.</p>
+    <p>The policy draws on global and regional digital transformation benchmarks, assesses Sabah's current digital landscape, and charts a strategic course across multiple thrusts — from data integration infrastructure and AI adoption to citizen engagement and open government data.</p>
+    <p style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13.5px;color:var(--muted);">
+      <strong style="color:var(--text);">Editing workflow:</strong> The 9 HTML files in the root folder are the working documents. To make changes, copy the relevant file into <code style="background:#eef1f7;padding:1px 5px;border-radius:3px;font-size:12px;">digitalpolicy_draft/</code>, edit the copy there, and log the change in <a href="digitalpolicy_draft/digitalpolicy_change_log.html" style="color:var(--blue);">digitalpolicy_change_log.html</a>. Never edit the root HTML files directly.
+    </p>
+  </div>
+
+  <h2>Document Structure</h2>
+  <div class="doc-list">
+
+    <div class="doc-item">
+      <div class="doc-num">1</div>
+      <div>
+        <div class="doc-title">Preface</div>
+        <div class="doc-desc">Foreword from the Chief Minister and State Secretary of Sabah, setting out the political commitment to digital transformation and the 5A vision.</div>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-num">2</div>
+      <div>
+        <div class="doc-title">Perspectives on Digital Transformation</div>
+        <div class="doc-desc">Global and regional context — how leading nations and Malaysia's federal government are approaching digital transformation, providing the benchmarks that inform Sabah's strategy.</div>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-num">3</div>
+      <div>
+        <div class="doc-title">The Landscape of Digital Transformation in Sabah</div>
+        <div class="doc-desc">Historical evolution from early ICT adoption in the late 1990s to the current SDGI initiatives, highlighting key milestones, challenges, and the present state of digital infrastructure in Sabah.</div>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-num">4</div>
+      <div>
+        <div class="doc-title">Sabah State Digital Policy</div>
+        <div class="doc-desc">The core policy statement — vision, mission, guiding principles, and strategic objectives under the SDGI initiative, including achievements from the 2020–2024 phase and the direction for 2025–2030.</div>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-num">5</div>
+      <div>
+        <div class="doc-title">Thrusts, Strategies, and Initiatives</div>
+        <div class="doc-desc">Detailed breakdown of strategic thrusts: Data Integration Platform (X-Road), Data Hubs (People, Business, Geo), Digital ID (Sabah ePass), AI adoption, cybersecurity, open data, and smart infrastructure — each with specific strategies and initiatives.</div>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-num">6</div>
+      <div>
+        <div class="doc-title">Governance Structure</div>
+        <div class="doc-desc">Defines the institutional framework — the Digital Government Division under the Sabah State Public Service Department, inter-agency coordination mechanisms, and accountability structures for policy implementation.</div>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-num">7</div>
+      <div>
+        <div class="doc-title">Citizen Engagement Strategy</div>
+        <div class="doc-desc">A comprehensive strategy to build public awareness, trust, and adoption of digital government services — with targeted outreach for underserved and rural communities across Sabah.</div>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-num">8</div>
+      <div>
+        <div class="doc-title">Closing</div>
+        <div class="doc-desc">Concluding remarks on Sabah's digital future — the shared responsibility of government, citizens, and the private sector in realising the SDGI 2020–2030 vision.</div>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-num">9</div>
+      <div>
+        <div class="doc-title">Definition and Glossary</div>
+        <div class="doc-desc">Standardised definitions for key terms used throughout the policy — AI, Blockchain, Cybersecurity, Data Hub, Digital ID, Open Data, X-Road, and more.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2>HTML Versions (Print-Ready)</h2>
+  <div class="html-list">
+
+    <div class="html-item">
+      <div class="doc-num">1</div>
+      <div>
+        <div class="doc-title">Preface</div>
+        <div class="doc-desc">Leadership foreword, SDGI evolution timeline</div>
+      </div>
+      <a class="html-link" target="_blank" href="1-preface.html">Open ↗</a>
+    </div>
+
+    <div class="html-item">
+      <div class="doc-num">2</div>
+      <div>
+        <div class="doc-title">Perspectives on Digital Transformation</div>
+        <div class="doc-desc">Global and national digital transformation context</div>
+      </div>
+      <a class="html-link" target="_blank" href="2-perspectives-on-digital-transformation.html">Open ↗</a>
+    </div>
+
+    <div class="html-item">
+      <div class="doc-num">3</div>
+      <div>
+        <div class="doc-title">The Landscape of Digital Transformation in Sabah</div>
+        <div class="doc-desc">History, current analysis, challenges, steps forward</div>
+      </div>
+      <a class="html-link" target="_blank" href="3-landscape-of-digital-transformation-in-sabah.html">Open ↗</a>
+    </div>
+
+    <div class="html-item">
+      <div class="doc-num">4</div>
+      <div>
+        <div class="doc-title">Sabah State Digital Policy</div>
+        <div class="doc-desc">Policy statement, core principles, objectives, stakeholders</div>
+      </div>
+      <a class="html-link" target="_blank" href="4-sabah-state-digital-policy.html">Open ↗</a>
+    </div>
+
+    <div class="html-item">
+      <div class="doc-num">5</div>
+      <div>
+        <div class="doc-title">Thrusts, Strategies, and Initiatives</div>
+        <div class="doc-desc">5 strategic thrusts with strategies and initiatives</div>
+      </div>
+      <a class="html-link" target="_blank" href="5-thrusts-strategies-and-initiatives.html">Open ↗</a>
+    </div>
+
+    <div class="html-item">
+      <div class="doc-num">6</div>
+      <div>
+        <div class="doc-title">Governance Structure</div>
+        <div class="doc-desc">5A principle, committees, risk management framework</div>
+      </div>
+      <a class="html-link" target="_blank" href="6-governance-structure.html">Open ↗</a>
+    </div>
+
+    <div class="html-item">
+      <div class="doc-num">7</div>
+      <div>
+        <div class="doc-title">Citizen Engagement Strategy</div>
+        <div class="doc-desc">Objectives, target groups, awareness and literacy strategies</div>
+      </div>
+      <a class="html-link" target="_blank" href="7-citizen-engagement-strategy.html">Open ↗</a>
+    </div>
+
+    <div class="html-item">
+      <div class="doc-num">8</div>
+      <div>
+        <div class="doc-title">Closing</div>
+        <div class="doc-desc">Concluding vision statement for Sabah's digital future</div>
+      </div>
+      <a class="html-link" target="_blank" href="8-closing.html">Open ↗</a>
+    </div>
+
+    <div class="html-item">
+      <div class="doc-num">9</div>
+      <div>
+        <div class="doc-title">Definition and Glossary</div>
+        <div class="doc-desc">Key term definitions and full policy glossary</div>
+      </div>
+      <a class="html-link" target="_blank" href="9-definition-and-glossary.html">Open ↗</a>
+    </div>
+
+  </div>
+
+  <h2>Folder Structure</h2>
+  <div class="folder-box">
+    <span class="dir">📁 DGD draft digital policy/</span><br>
+    &nbsp;&nbsp;<span class="file">📄 1-preface.html</span><br>
+    &nbsp;&nbsp;<span class="file">📄 2-perspectives-on-digital-transformation.html</span><br>
+    &nbsp;&nbsp;<span class="file">📄 3-landscape-of-digital-transformation-in-sabah.html</span><br>
+    &nbsp;&nbsp;<span class="file">📄 4-sabah-state-digital-policy.html</span><br>
+    &nbsp;&nbsp;<span class="file">📄 5-thrusts-strategies-and-initiatives.html</span><br>
+    &nbsp;&nbsp;<span class="file">📄 6-governance-structure.html</span><br>
+    &nbsp;&nbsp;<span class="file">📄 7-citizen-engagement-strategy.html</span><br>
+    &nbsp;&nbsp;<span class="file">📄 8-closing.html</span><br>
+    &nbsp;&nbsp;<span class="file">📄 9-definition-and-glossary.html</span><br>
+    &nbsp;&nbsp;<span class="dir">📁 digital_policy_archives/</span><span class="note">original .docx source files (all 9 chapters)</span><br>
+    &nbsp;&nbsp;<span class="dir">📁 digitalpolicy_draft/</span><span class="note">edited copies of HTML files go here; never edit originals directly</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 digitalpolicy_change_log.html</span><span class="note">tracks all document changes</span><br>
+    &nbsp;&nbsp;<span class="dir">📁 images/</span><span class="note">contains the logo image used across the HTML documents</span><br>
+    &nbsp;&nbsp;<span class="dir">📁 template-documentation/</span><span class="note">document templates and print layout demos</span><br>
+    &nbsp;&nbsp;<span class="file">📄 readme.html</span><span class="note">this file</span>
+  </div>
+
+  <h2>Key Themes</h2>
+  <div class="themes">
+    <div class="theme-card">
+      <div class="icon">🔗</div>
+      <h3>Data Integration</h3>
+      <p>X-Road platform for secure, seamless data exchange across all state agencies.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🪪</div>
+      <h3>Digital Identity</h3>
+      <p>Sabah ePass (Sabah Digital ID) as the foundation for citizen-facing digital services.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🤖</div>
+      <h3>AI & Innovation</h3>
+      <p>Embedding artificial intelligence in public service delivery, automation, and policymaking.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🛡️</div>
+      <h3>Cybersecurity</h3>
+      <p>Protecting government systems, citizen data, and critical digital infrastructure.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">📂</div>
+      <h3>Open Data</h3>
+      <p>Publishing government datasets to drive transparency, research, and innovation.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🌐</div>
+      <h3>Inclusion</h3>
+      <p>Bridging the digital divide for rural and underserved communities across Sabah.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Sabah Digital Government Innovation (SDGI) · Digital Government Division · Sabah State Public Service Department<br>
+  Draft document — generated README · June 2026
+</footer>
+
+</body>
+</html>

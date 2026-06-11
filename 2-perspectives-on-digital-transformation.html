@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perspectives on Digital Transformation — Sabah State Digital Policy</title>
+  <style>
+
+    /* ============================================================
+       TOKENS
+    ============================================================ */
+    :root {
+      --navy:      #1e3a5c;
+      --navy-mid:  #2a4f7c;
+      --navy-dark: #142840;
+      --gold:      #b8892a;
+      --gold-light:#d4a84b;
+      --text:      #1a1a2e;
+      --muted:     #5a6377;
+      --border:    #d6dbe6;
+      --bg-screen: #edf1f7;
+      --bg-code:   #f3f6fb;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+      font-size: 10.5pt;
+      color: var(--text);
+      line-height: 1.65;
+      background: var(--bg-screen);
+    }
+
+    /* ============================================================
+       TOOLBAR
+    ============================================================ */
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--navy-dark);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      font-size: 9.5pt;
+      gap: 16px;
+    }
+    .toolbar p { opacity: 0.8; }
+    .btn-print {
+      flex-shrink: 0;
+      background: var(--gold);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-size: 9.5pt;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-print:hover { background: #9a7322; }
+
+    /* ============================================================
+       DOCUMENT WRAPPER
+    ============================================================ */
+    .doc-wrapper {
+      display: flex;
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 28px auto 60px;
+      background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+    }
+
+    .doc-content {
+      flex: 1;
+      padding: 14mm 12mm 14mm 14mm;
+      min-width: 0;
+    }
+
+    /* ============================================================
+       SIDEBAR
+    ============================================================ */
+    .sidebar {
+      width: 50mm;
+      flex-shrink: 0;
+      background: #f7f8fb;
+      border-left: 3px solid var(--gold);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      padding: 14mm 7mm 10mm;
+    }
+
+    .sb-badge {
+      display: inline-block;
+      background: transparent;
+      color: var(--gold);
+      border: 1.5px solid var(--gold);
+      font-size: 7pt;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      padding: 2px 7px;
+      border-radius: 2px;
+      text-align: center;
+      margin-bottom: 10mm;
+    }
+    .sb-label {
+      font-size: 6.5pt;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+    .sb-title {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.35;
+      margin-bottom: 8mm;
+    }
+    .sb-rule       { height: 1px; background: var(--border); margin: 5mm 0; }
+    .sb-rule-gold  { height: 1px; background: var(--gold);   margin: 5mm 0; }
+    .sb-field      { margin-bottom: 5mm; }
+    .sb-value      { font-size: 8.5pt; color: var(--text); line-height: 1.4; }
+    .sb-spacer     { flex: 1; }
+    .sb-footer-note {
+      font-size: 6.5pt;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 5mm;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY
+    ============================================================ */
+    h1 {
+      font-size: 18pt;
+      color: var(--navy);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+    h2 {
+      font-size: 12pt;
+      color: var(--navy);
+      font-weight: 700;
+      margin: 16px 0 7px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--border);
+    }
+    h3 {
+      font-size: 10pt;
+      color: var(--navy);
+      font-weight: 700;
+      margin: 12px 0 5px;
+    }
+
+    p { margin-bottom: 8px; text-align: justify; }
+    ul { margin: 5px 0 9px 16px; }
+    ul li { margin-bottom: 4px; }
+
+    .meta {
+      color: var(--muted);
+      font-size: 8pt;
+      margin-bottom: 16px;
+    }
+    .meta span + span::before { content: ' · '; opacity: 0.4; }
+
+    .callout {
+      border-left: 4px solid var(--gold);
+      background: #fdf8ef;
+      padding: 9px 12px;
+      border-radius: 0 4px 4px 0;
+      margin: 11px 0;
+      font-size: 9.5pt;
+    }
+    .callout strong { color: var(--navy); }
+
+    table.dt {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 9px 0;
+      font-size: 8.8pt;
+    }
+    table.dt thead th {
+      background: transparent;
+      color: var(--navy);
+      padding: 6px 9px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 8pt;
+      border-bottom: 2px solid var(--navy);
+    }
+    table.dt tbody td {
+      padding: 6px 9px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    table.dt tbody tr:nth-child(even) td { background: #f8f9fc; }
+
+    .badge {
+      display: inline-block;
+      background: transparent;
+      color: var(--gold);
+      border: 1.5px solid var(--gold);
+      font-size: 7.5pt;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 2px;
+      letter-spacing: 0.8px;
+    }
+
+    .cover-rule {
+      width: 36px;
+      height: 3px;
+      background: var(--gold);
+      margin: 10px 0 14px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .end-mark {
+      text-align: center;
+      color: var(--muted);
+      font-size: 8pt;
+      margin-top: 28px;
+      letter-spacing: 1px;
+    }
+
+    /* ── Page break markers (screen only) ── */
+    .pbm {
+      margin: 18px -12mm 18px -14mm;
+      padding: 6px 14mm;
+      background: #f4f6fb;
+      border-top: 2px dashed #c5cdd9;
+      border-bottom: 2px dashed #c5cdd9;
+      font-size: 7.8pt;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .sb-section { }
+
+    /* ── Cover page ── */
+    .cover-page {
+      display: flex;
+      flex-direction: column;
+      min-height: 250mm;
+    }
+    .cover-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 8mm;
+      padding-bottom: 7mm;
+      border-bottom: 3px solid var(--gold);
+      margin-bottom: 10mm;
+    }
+    .cover-logo-row img {
+      width: 22mm;
+      height: 22mm;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .cover-org-name { font-size: 12pt; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .cover-org-sub  { font-size: 9pt; color: var(--muted); margin-top: 2px; }
+    .cover-doc-type { font-size: 7.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 5mm; }
+    .cover-title    { font-size: 22pt; color: var(--navy); font-weight: 700; line-height: 1.2; margin-bottom: 5mm; }
+    .cover-ref      { font-size: 8.5pt; color: var(--muted); }
+    .cover-spacer   { flex: 1; min-height: 10mm; }
+
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+    .sig-block { border: 1px solid var(--border); border-radius: 3px; padding: 6mm 7mm 5mm; }
+    .sig-role  { font-size: 8.5pt; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18mm; }
+    .sig-line  { border-bottom: 1px solid var(--navy); margin-bottom: 4mm; }
+    .sig-field { font-size: 7.5pt; color: var(--muted); margin-bottom: 3mm; }
+
+    /* ============================================================
+       PRINT STYLES
+    ============================================================ */
+    @media print {
+      body { background: white; font-size: 10pt; padding-right: 55mm; }
+      .toolbar { display: none !important; }
+      .pbm     { display: none !important; }
+      .doc-wrapper {
+        display: block !important; max-width: none !important;
+        min-height: auto !important; margin: 0 !important;
+        box-shadow: none !important; background: transparent !important;
+      }
+      .doc-content { padding: 0 !important; }
+      .sb-section  { break-before: page; page-break-before: always; }
+      .cover-page  { height: 267mm; min-height: unset; break-after: page; page-break-after: always; }
+      .sidebar {
+        position: fixed; right: 0; top: 0; bottom: 0; width: 50mm;
+        display: flex !important; flex-direction: column;
+        padding: 14mm 7mm 10mm;
+        background: #f7f8fb; border-left: 3px solid var(--gold); color: var(--text);
+      }
+      @page { size: A4 portrait; margin: 15mm; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <p>Sabah State Digital Policy — Chapter 2: Perspectives on Digital Transformation &nbsp;|&nbsp; JPANS, Bahagian Kerajaan Digital</p>
+    <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+  </div>
+
+  <div class="doc-wrapper">
+    <div class="doc-content">
+
+      <!-- ══════════════════════════════════════════
+           PAGE 0 — COVER
+      ══════════════════════════════════════════ -->
+      <div class="cover-page">
+
+        <div class="cover-logo-row">
+                    <img src="images/jpan_logo.png" alt="Jabatan Perkhidmatan Awam Negeri Sabah Logo">
+          <div>
+            <div class="cover-org-name">Jabatan Perkhidmatan Awam Negeri Sabah</div>
+            <div class="cover-org-sub">Bahagian Kerajaan Digital</div>
+          </div>
+        </div>
+
+        <div class="cover-doc-type">Polisi Kerajaan Digital</div>
+
+        <div class="cover-title">
+          Sabah State<br>Digital Policy
+        </div>
+
+        <div style="font-size:13pt; color:var(--navy-mid); font-weight:600; margin-bottom:4mm;">
+          Chapter 2 — Perspectives on Digital Transformation
+        </div>
+
+        <div class="cover-ref">
+          Rujukan: JPANS/BKD/SDGI/002 &nbsp;·&nbsp; Versi 1.0 (Draf) &nbsp;·&nbsp; Feb 2025
+        </div>
+
+        <div class="cover-spacer"></div>
+
+        <div class="sig-grid">
+          <div class="sig-block">
+            <div class="sig-role">Disediakan oleh</div>
+            <div class="sig-line"></div>
+            <div class="sig-field">Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Jawatan &nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Tarikh &nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+          </div>
+          <div class="sig-block">
+            <div class="sig-role">Disahkan oleh</div>
+            <div class="sig-line"></div>
+            <div class="sig-field">Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Jawatan &nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Tarikh &nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+          </div>
+        </div>
+
+      </div><!-- /.cover-page -->
+
+      <div class="pbm">✂ &nbsp; Page break — Page 1 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════════
+           PAGE 1 — Global Perspective (intro)
+      ══════════════════════════════════════════ -->
+      <span class="badge">Page 1</span>
+      <br><br>
+
+      <h1>Perspectives on Digital<br>Transformation</h1>
+      <div class="cover-rule"></div>
+      <p class="meta">
+        <span>Sabah State Digital Policy</span>
+        <span>JPANS/BKD/SDGI/002</span>
+        <span>Feb 2025</span>
+      </p>
+
+      <h2>2.1 Global Perspective</h2>
+
+      <p>Digital transformation has become a cornerstone of economic and social development worldwide. As nations strive to remain competitive in an increasingly interconnected world, the adoption of digital platforms, data integration, and smart city initiatives has emerged as a global trend. These advancements are reshaping industries, governments, and societies, fostering innovation, efficiency, and inclusivity.</p>
+
+      <h3>Digital Platforms</h3>
+
+      <p>One of the most significant global trends in digital transformation is the widespread adoption of digital platforms. These platforms — which include e-commerce, cloud computing, and digital payment systems — have revolutionised how businesses operate and interact with customers. Companies like Amazon, Alibaba, and Shopify have transformed retail by creating seamless online marketplaces that connect buyers and sellers across the globe. Similarly, cloud computing platforms such as Amazon Web Services (AWS) and Microsoft Azure have enabled organisations to scale their operations, enhance data storage, and improve collaboration.</p>
+
+      <h3>Data Integration</h3>
+
+      <p>Data integration is another critical aspect of digital transformation. In today's data-driven world, the ability to collect, analyse, and utilise data effectively is essential for decision-making and innovation. Countries and organisations are investing heavily in big data analytics, artificial intelligence (AI), and the Internet of Things (IoT) to harness the power of data.</p>
+
+      <div class="callout">
+        <strong>Example — Singapore Smart Nation:</strong> Singapore's Smart Nation initiative leverages data integration to optimise urban planning, transportation, and healthcare services, improving the quality of life for its citizens.
+      </div>
+
+      <h3>Smart City Initiatives</h3>
+
+      <p>Smart city initiatives are also gaining momentum globally. These initiatives aim to use technology to enhance urban living by improving infrastructure, reducing environmental impact, and increasing citizen engagement. Cities like Barcelona, Spain, and Seoul, South Korea, have implemented smart city projects that include intelligent transportation systems, energy-efficient buildings, and digital governance platforms. These initiatives not only improve urban efficiency but also contribute to sustainability and resilience in the face of global challenges such as climate change and population growth.</p>
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 2 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════════
+           PAGE 2 — Global Best Practices
+      ══════════════════════════════════════════ -->
+      <div class="sb-section">
+
+        <span class="badge">Page 2</span>
+
+        <h2 style="margin-top:10px;">Global Best Practices</h2>
+
+        <p>Several countries have set benchmarks for successful digital transformation initiatives that offer lessons for Sabah's own strategy.</p>
+
+        <table class="dt">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Initiative</th>
+              <th>Key Features</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Estonia</strong></td>
+              <td>e-Governance Model</td>
+              <td>Digitises public services and ensures secure data exchange through blockchain technology, streamlining administrative processes, reducing bureaucracy, and increasing transparency.</td>
+            </tr>
+            <tr>
+              <td><strong>Denmark</strong></td>
+              <td>National Digital Strategy</td>
+              <td>Focuses on digital literacy, cybersecurity, and public-private partnerships — enabling the country to rank among the most digitally advanced nations globally.</td>
+            </tr>
+            <tr>
+              <td><strong>South Korea</strong></td>
+              <td>Digital New Deal</td>
+              <td>Expands digital infrastructure, fosters AI and 5G technologies, and promotes digital education — making South Korea a global leader in innovation and technology adoption.</td>
+            </tr>
+            <tr>
+              <td><strong>Singapore</strong></td>
+              <td>Smart Nation Initiative</td>
+              <td>Integrates data across urban services — transport, health, planning — to deliver citizen-centric governance and position Singapore as a model digital nation.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>Key takeaway:</strong> The common thread across leading digital nations is a commitment to strong data governance, citizen-centred service design, public-private collaboration, and continuous investment in digital skills — all of which inform Sabah's own digital strategy.
+        </div>
+
+      </div><!-- end sb-section page 2 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 3 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════════
+           PAGE 3 — National Perspective
+      ══════════════════════════════════════════ -->
+      <div class="sb-section">
+
+        <span class="badge">Page 3</span>
+
+        <h2 style="margin-top:10px;">2.2 National Perspective</h2>
+
+        <p>At the national level, Malaysia has embraced digital transformation as a key driver of economic growth and social progress. The Sabah State Digital Policy aligns with Malaysia's broader national agendas, including the <strong>Malaysia Digital Economy Blueprint (MyDIGITAL)</strong> and the <strong>12th Malaysia Plan</strong>. These initiatives aim to position Malaysia as a regional leader in the digital economy while ensuring inclusive and sustainable development.</p>
+
+        <h3>Malaysia Digital Economy Blueprint (MyDIGITAL)</h3>
+
+        <p>The Malaysia Digital Economy Blueprint (MyDIGITAL) outlines a comprehensive roadmap for digital transformation, focusing on three key pillars:</p>
+
+        <ul>
+          <li><strong>Driving digital transformation</strong> in the public and private sectors</li>
+          <li><strong>Fostering digital skills and inclusivity</strong> across all communities</li>
+          <li><strong>Enhancing digital infrastructure</strong> to support connectivity nationwide</li>
+        </ul>
+
+        <p>MyDIGITAL aims to increase the digital economy's contribution to Malaysia's GDP, create high-value jobs, and bridge the digital divide between urban and rural areas. Sabah's digital policy complements these objectives by addressing the unique challenges and opportunities in the state — such as improving connectivity in remote regions and promoting digital entrepreneurship.</p>
+
+        <h3>12th Malaysia Plan (2021–2025)</h3>
+
+        <p>The 12th Malaysia Plan (2021–2025) further reinforces the importance of digital transformation in achieving national development goals. The plan emphasises the need for digital innovation, cybersecurity, and sustainable urban development. Sabah's digital initiatives — including the development of smart cities and the adoption of digital technologies in agriculture and tourism — align directly with these priorities. By leveraging digital tools, Sabah can enhance its economic competitiveness, improve public service delivery, and ensure environmental sustainability.</p>
+
+        <h3>Conclusion</h3>
+
+        <p>Digital transformation is a global imperative that transcends borders and industries. By examining global trends and best practices, Malaysia and Sabah can draw valuable insights to inform their digital strategies. Aligning the Sabah State Digital Policy with national agendas such as MyDIGITAL and the 12th Malaysia Plan ensures a cohesive and forward-looking approach to digital transformation.</p>
+
+        <p>As the world continues to evolve in the digital age, Sabah has the potential to emerge as a model for sustainable and inclusive digital development — both nationally and globally.</p>
+
+        <p class="end-mark">— End of Chapter 2: Perspectives on Digital Transformation —</p>
+
+      </div><!-- end sb-section page 3 -->
+
+    </div><!-- /.doc-content -->
+
+
+    <!-- ══════════════════════════════════════════
+         SIDEBAR
+    ══════════════════════════════════════════ -->
+    <aside class="sidebar">
+
+      <div class="sb-badge">RASMI</div>
+
+      <div class="sb-field">
+        <div class="sb-label">Dokumen</div>
+        <div class="sb-title">Sabah State Digital Policy</div>
+      </div>
+
+      <div class="sb-rule-gold"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Bab</div>
+        <div class="sb-value">2 — Perspectives on Digital Transformation</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Organisasi</div>
+        <div class="sb-value">Jabatan Perkhidmatan Awam Negeri Sabah</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Bahagian</div>
+        <div class="sb-value">Bahagian Kerajaan Digital</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Rujukan</div>
+        <div class="sb-value">JPANS/BKD/SDGI/002</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Tarikh</div>
+        <div class="sb-value">Feb 2025</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Versi</div>
+        <div class="sb-value">1.0 (Draf)</div>
+      </div>
+
+      <div class="sb-spacer"></div>
+
+      <div class="sb-rule-gold"></div>
+      <div class="sb-footer-note">
+        Dokumen draf — tidak untuk edaran awam.<br>
+        Sabah Digital Government Innovation (SDGI) Roadmap 2020–2030.
+      </div>
+
+    </aside>
+
+  </div><!-- /.doc-wrapper -->
+
+</body>
+</html>

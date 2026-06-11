@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sabah State Digital Policy — Chapter 4</title>
+  <style>
+
+    :root {
+      --navy:      #1e3a5c;
+      --navy-mid:  #2a4f7c;
+      --navy-dark: #142840;
+      --gold:      #b8892a;
+      --text:      #1a1a2e;
+      --muted:     #5a6377;
+      --border:    #d6dbe6;
+      --bg-screen: #edf1f7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+      font-size: 10.5pt;
+      color: var(--text);
+      line-height: 1.65;
+      background: var(--bg-screen);
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--navy-dark); color: white;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 24px; font-size: 9.5pt; gap: 16px;
+    }
+    .toolbar p { opacity: 0.8; }
+    .btn-print {
+      flex-shrink: 0; background: var(--gold); color: white; border: none;
+      padding: 8px 18px; border-radius: 4px; font-size: 9.5pt;
+      font-weight: 600; cursor: pointer;
+    }
+    .btn-print:hover { background: #9a7322; }
+
+    /* ── Document wrapper ── */
+    .doc-wrapper {
+      display: flex; max-width: 210mm; min-height: 297mm;
+      margin: 28px auto 60px; background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+    }
+    .doc-content { flex: 1; padding: 14mm 12mm 14mm 14mm; min-width: 0; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 50mm; flex-shrink: 0; background: #f7f8fb;
+      border-left: 3px solid var(--gold); color: var(--text);
+      display: flex; flex-direction: column; padding: 14mm 7mm 10mm;
+    }
+    .sb-badge {
+      display: inline-block; background: transparent; color: var(--gold);
+      border: 1.5px solid var(--gold); font-size: 7pt; font-weight: 700;
+      letter-spacing: 1.2px; padding: 2px 7px; border-radius: 2px;
+      text-align: center; margin-bottom: 10mm;
+    }
+    .sb-label { font-size: 6.5pt; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .sb-title { font-size: 9.5pt; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 8mm; }
+    .sb-rule      { height: 1px; background: var(--border); margin: 5mm 0; }
+    .sb-rule-gold { height: 1px; background: var(--gold);   margin: 5mm 0; }
+    .sb-field     { margin-bottom: 5mm; }
+    .sb-value     { font-size: 8.5pt; color: var(--text); line-height: 1.4; }
+    .sb-spacer    { flex: 1; }
+    .sb-footer-note { font-size: 6.5pt; color: var(--muted); line-height: 1.5; margin-top: 5mm; }
+
+    /* ── Typography ── */
+    h1 { font-size: 18pt; color: var(--navy); font-weight: 700; line-height: 1.2; margin-bottom: 5px; }
+    h2 { font-size: 12pt; color: var(--navy); font-weight: 700; margin: 16px 0 7px; padding-bottom: 4px; border-bottom: 2px solid var(--border); }
+    h3 { font-size: 10pt; color: var(--navy); font-weight: 700; margin: 12px 0 5px; }
+    p  { margin-bottom: 8px; text-align: justify; }
+    ul { margin: 5px 0 9px 18px; }
+    ul li { margin-bottom: 4px; }
+    ol { margin: 5px 0 9px 18px; }
+    ol li { margin-bottom: 4px; }
+
+    .meta { color: var(--muted); font-size: 8pt; margin-bottom: 16px; }
+    .meta span + span::before { content: ' · '; opacity: 0.4; }
+
+    .callout {
+      border-left: 4px solid var(--gold); background: #fdf8ef;
+      padding: 9px 12px; border-radius: 0 4px 4px 0; margin: 11px 0; font-size: 9.5pt;
+    }
+    .callout strong { color: var(--navy); }
+
+    table.dt { width: 100%; border-collapse: collapse; margin: 9px 0; font-size: 8.8pt; }
+    table.dt thead th {
+      background: transparent; color: var(--navy); padding: 6px 9px;
+      text-align: left; font-weight: 700; font-size: 8pt; border-bottom: 2px solid var(--navy);
+    }
+    table.dt tbody td { padding: 6px 9px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    table.dt tbody tr:nth-child(even) td { background: #f8f9fc; }
+
+    .badge {
+      display: inline-block; background: transparent; color: var(--gold);
+      border: 1.5px solid var(--gold); font-size: 7.5pt; font-weight: 700;
+      padding: 2px 7px; border-radius: 2px; letter-spacing: 0.8px;
+    }
+    .cover-rule { width: 36px; height: 3px; background: var(--gold); margin: 10px 0 14px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .end-mark { text-align: center; color: var(--muted); font-size: 8pt; margin-top: 28px; letter-spacing: 1px; }
+
+    .pbm {
+      margin: 18px -12mm 18px -14mm; padding: 6px 14mm; background: #f4f6fb;
+      border-top: 2px dashed #c5cdd9; border-bottom: 2px dashed #c5cdd9;
+      font-size: 7.8pt; color: var(--muted); font-style: italic;
+    }
+    .sb-section { }
+
+    /* ── Cover page ── */
+    .cover-page { display: flex; flex-direction: column; min-height: 250mm; }
+    .cover-logo-row { display: flex; align-items: center; gap: 8mm; padding-bottom: 7mm; border-bottom: 3px solid var(--gold); margin-bottom: 10mm; }
+    .cover-logo-row img {
+      width: 22mm;
+      height: 22mm;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .cover-org-name { font-size: 12pt; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .cover-org-sub  { font-size: 9pt; color: var(--muted); margin-top: 2px; }
+    .cover-doc-type { font-size: 7.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 5mm; }
+    .cover-title    { font-size: 22pt; color: var(--navy); font-weight: 700; line-height: 1.2; margin-bottom: 5mm; }
+    .cover-ref      { font-size: 8.5pt; color: var(--muted); }
+    .cover-spacer   { flex: 1; min-height: 10mm; }
+    .sig-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+    .sig-block { border: 1px solid var(--border); border-radius: 3px; padding: 6mm 7mm 5mm; }
+    .sig-role  { font-size: 8.5pt; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18mm; }
+    .sig-line  { border-bottom: 1px solid var(--navy); margin-bottom: 4mm; }
+    .sig-field { font-size: 7.5pt; color: var(--muted); margin-bottom: 3mm; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: white; font-size: 10pt; padding-right: 55mm; }
+      .toolbar { display: none !important; }
+      .pbm     { display: none !important; }
+      .doc-wrapper { display: block !important; max-width: none !important; min-height: auto !important; margin: 0 !important; box-shadow: none !important; background: transparent !important; }
+      .doc-content { padding: 0 !important; }
+      .sb-section  { break-before: page; page-break-before: always; }
+      .cover-page  { height: 267mm; min-height: unset; break-after: page; page-break-after: always; }
+      .sidebar {
+        position: fixed; right: 0; top: 0; bottom: 0; width: 50mm;
+        display: flex !important; flex-direction: column; padding: 14mm 7mm 10mm;
+        background: #f7f8fb; border-left: 3px solid var(--gold); color: var(--text);
+      }
+      @page { size: A4 portrait; margin: 15mm; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <p>Sabah State Digital Policy — Chapter 4: Sabah State Digital Policy &nbsp;|&nbsp; JPANS, Bahagian Kerajaan Digital</p>
+    <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+  </div>
+
+  <div class="doc-wrapper">
+    <div class="doc-content">
+
+      <!-- ══════════════════════════════════════
+           PAGE 0 — COVER
+      ══════════════════════════════════════ -->
+      <div class="cover-page">
+        <div class="cover-logo-row">
+                    <img src="images/jpan_logo.png" alt="Jabatan Perkhidmatan Awam Negeri Sabah Logo">
+          <div>
+            <div class="cover-org-name">Jabatan Perkhidmatan Awam Negeri Sabah</div>
+            <div class="cover-org-sub">Bahagian Kerajaan Digital</div>
+          </div>
+        </div>
+        <div class="cover-doc-type">Polisi Kerajaan Digital</div>
+        <div class="cover-title">Sabah State<br>Digital Policy</div>
+        <div style="font-size:13pt; color:var(--navy-mid); font-weight:600; margin-bottom:4mm;">
+          Chapter 4 — Sabah State Digital Policy
+        </div>
+        <div class="cover-ref">Rujukan: JPANS/BKD/SDGI/004 &nbsp;·&nbsp; Versi 1.0 (Draf) &nbsp;·&nbsp; Mei 2025</div>
+        <div class="cover-spacer"></div>
+        <div class="sig-grid">
+          <div class="sig-block">
+            <div class="sig-role">Disediakan oleh</div>
+            <div class="sig-line"></div>
+            <div class="sig-field">Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Jawatan &nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Tarikh &nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+          </div>
+          <div class="sig-block">
+            <div class="sig-role">Disahkan oleh</div>
+            <div class="sig-line"></div>
+            <div class="sig-field">Nama &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Jawatan &nbsp;&nbsp;: _______________________</div>
+            <div class="sig-field">Tarikh &nbsp;&nbsp;&nbsp;&nbsp;: _______________________</div>
+          </div>
+        </div>
+      </div><!-- /.cover-page -->
+
+      <div class="pbm">✂ &nbsp; Page break — Page 1 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 1 — 4.1 Policy Statement
+      ══════════════════════════════════════ -->
+      <span class="badge">Page 1</span><br><br>
+
+      <h1>Sabah State Digital Policy</h1>
+      <div class="cover-rule"></div>
+      <p class="meta">
+        <span>Sabah State Digital Policy</span>
+        <span>JPANS/BKD/SDGI/004</span>
+        <span>Mei 2025</span>
+      </p>
+
+      <h2>4.1 Digital Transformation Policy Statement</h2>
+
+      <p>Sabah is committed to advancing its digital transformation journey through a structured and strategic approach under the <strong>Sabah Digital Government Innovation (SDGI)</strong> initiative. From <em>Automation to Innovation</em>, and then from <em>Innovation to Intelligence</em>, Sabah is transitioning towards a data-driven government that leverages technology, artificial intelligence, and open data to improve governance, enhance citizen experience, and drive economic growth.</p>
+
+      <p>The evolution of Sabah's digital strategy reflects a progressive shift in focus:</p>
+
+      <ul>
+        <li>In the <strong>SDGI 2020–2024</strong> phase, foundational infrastructure was built, including the development of the DIIP platform, Sabah Digital ID (Sabah ePass), Digital Sabah Portal, and the establishment of centralised data hubs (People, Business, and Geo Hub). These efforts laid the groundwork for a more connected and efficient government.</li>
+        <li>With the <strong>SDGI 2025–2030</strong> roadmap, Sabah enters a new era focused on intelligence and data-driven decision-making. This includes scaling up the DIIP platform using X-Road technology, expanding the use of Sabah ePass as the standard digital identity solution, integrating artificial intelligence into at least 50% of government systems, and enabling open data-as-a-service for businesses and innovators.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>The 5A Principle:</strong> The ultimate goal is to build a government that is efficient, transparent, responsive, and capable of delivering personalised services to all Sabahans — <strong>Accessible</strong> by <strong>Anyone</strong> at <strong>Anytime</strong>, <strong>Anywhere</strong>, and by using <strong>Any Device</strong>.
+      </div>
+
+      <p>This policy aligns with national frameworks such as <strong>MyDIGITAL</strong> and the <strong>13th Malaysia Plan (RMKe-13)</strong>, ensuring that Sabah plays a vital role in Malaysia's broader digital economy aspirations. By embracing this dual-phase approach of foundation building followed by intelligent governance, Sabah is positioning itself as a regional leader in smart, sustainable, and inclusive digital transformation.</p>
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 2 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 2 — 4.2 Core Principles + 4.3 Key Policy Objectives
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 2</span>
+
+        <h2 style="margin-top:10px;">4.2 Core Principles</h2>
+
+        <table class="dt">
+          <thead>
+            <tr><th>Principle</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Citizen-Centric Approach</strong></td>
+              <td>Prioritise the needs of citizens by providing accessible, efficient, and user-friendly digital services.</td>
+            </tr>
+            <tr>
+              <td><strong>Data-Driven Governance</strong></td>
+              <td>Utilise data as a strategic asset to inform decision-making, improve resource allocation, and enhance public policy.</td>
+            </tr>
+            <tr>
+              <td><strong>Innovation and Technology</strong></td>
+              <td>Embrace emerging technologies such as Artificial Intelligence (AI) and data analytics to drive innovation and improve service delivery.</td>
+            </tr>
+            <tr>
+              <td><strong>Security and Trust</strong></td>
+              <td>Ensure the security, privacy, and integrity of data and digital systems.</td>
+            </tr>
+            <tr>
+              <td><strong>Collaboration and Integration</strong></td>
+              <td>Foster collaboration among government agencies, the private sector, and the community to achieve shared digital goals.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>4.3 Key Policy Objectives</h2>
+
+        <h3>Integrated Digital Ecosystem</h3>
+        <p>Establish an integrated digital ecosystem that connects all government agencies, ensuring seamless data sharing and interoperability — including implementing the DIIP-X platform for secure data sharing and developing the Sabah Digital ID as the official digital identification providing a single point of access to government services.</p>
+
+        <h3>Enhanced Public Service Delivery</h3>
+        <ul>
+          <li>Automate government processes to reduce manual tasks and bureaucratic delays</li>
+          <li>Provide digital access to <strong>95% of main government services</strong> by 2030</li>
+          <li>Reduce government transaction processing time by <strong>50% or more</strong> by 2030</li>
+        </ul>
+
+        <h3>Data-Driven Decision Making</h3>
+        <ul>
+          <li>Ensure that <strong>100% of government data</strong> is available for AI processing by 2030</li>
+          <li>Employ data analytics to improve policy development, resource allocation, and programme implementation</li>
+        </ul>
+
+        <h3>AI and Innovation</h3>
+        <ul>
+          <li>Implement AI in at least <strong>50% of government systems</strong> by 2030</li>
+          <li>Execute a minimum of <strong>50 AI-based projects</strong> in the Sabah public sector</li>
+          <li>Promote the use of AI in public services for improved efficiency and effectiveness</li>
+        </ul>
+
+        <h3>Skilled Digital Workforce</h3>
+        <ul>
+          <li>Train at least <strong>5,000 public servants</strong> in basic AI usage by 2030</li>
+          <li>Encourage talent development in data science, analytics, and AI</li>
+        </ul>
+
+        <h3>Digital Economy Growth</h3>
+        <ul>
+          <li>Support digital innovation and startups</li>
+          <li>Attract investments in digital infrastructure</li>
+        </ul>
+
+        <h3>Cybersecurity and Data Protection</h3>
+        <ul>
+          <li>Establish robust cybersecurity measures to protect government systems</li>
+          <li>Implement data governance policies aligned with national standards</li>
+        </ul>
+
+        <h3>Accessibility and Inclusion</h3>
+        <ul>
+          <li>Make digital government services available anytime, anywhere, on any device (5A Principles)</li>
+        </ul>
+
+      </div><!-- end page 2 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 3 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 3 — 4.3 Roles of Stakeholders (JPANS + State Agencies)
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 3</span>
+
+        <h2 style="margin-top:10px;">4.3 Roles of Stakeholders</h2>
+
+        <h3>4.3.1 Jabatan Perkhidmatan Awam Negeri Sabah (JPANS)</h3>
+        <p>JPANS is the <strong>primary agency</strong> responsible for the overall implementation and execution of the Digital Government Programme and its various projects. Specifically, this includes:</p>
+        <ul>
+          <li>Owning and leading the implementation of the <strong>Platform Integrasi DIIP-X</strong> and ID Digital Sabah project</li>
+          <li>Owning and leading the <strong>Inisiatif Kecerdasan Data Sabah (SDII)</strong></li>
+          <li>Owning and leading the <strong>Transformasi Digital Perkhidmatan Awam Negeri (TDPAN)</strong></li>
+          <li>Managing project planning, execution, and monitoring</li>
+          <li>Coordinating with other government agencies and stakeholders</li>
+          <li>Ensuring the achievement of project goals and Key Performance Indicators (KPIs)</li>
+        </ul>
+        <p>JPANS is central to driving the digital transformation of the state's public sector and ensuring the various digital initiatives are aligned with the overall objectives.</p>
+
+        <h3>4.3.2 Agensi Perkhidmatan Awam Negeri Sabah (State Agencies)</h3>
+        <p>These are the various government departments and agencies within Sabah that will be directly impacted by the digital transformation initiatives and are expected to adopt and use the new digital systems and platforms. Their specific roles include:</p>
+        <ul>
+          <li>Adopting and integrating the DIIP-X platform into their existing systems</li>
+          <li>Utilising the Sabah Digital ID for citizen authentication and access to services</li>
+          <li>Implementing AI and data analytics into their operations</li>
+          <li>Contributing data to the integrated data ecosystem and data sharing</li>
+          <li>Participating in training and capacity-building programmes related to AI and data analytics</li>
+          <li>Transforming their services to be digitally accessible, including workflows and business processes</li>
+          <li>Adopting changes to achieve the targets set by the Digital Transformation Policy</li>
+        </ul>
+        <p>These agencies are the key users and beneficiaries of the digital initiatives, and their active participation is crucial for successful implementation.</p>
+
+      </div><!-- end page 3 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 4 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 4 — Stakeholders: Citizens + Private Sector
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 4</span>
+
+        <h3 style="margin-top:10px;">4.3.3 Rakyat Sabah (Sabah Residents)</h3>
+        <p>Citizens are the <strong>end-users</strong> of the digital services and are expected to benefit directly from the improvements in government efficiency and service delivery. Their specific roles include:</p>
+        <ul>
+          <li>Registering for and using the Sabah Digital ID to access government services</li>
+          <li>Engaging with government services through digital platforms</li>
+          <li>Providing feedback and participating in consultations to help improve services</li>
+          <li>Accessing services more easily, quickly, and securely</li>
+        </ul>
+        <p>The initiatives aim to improve the lives of Sabah citizens by making government services more accessible and efficient. The success of the initiatives hinges on citizen adoption and use.</p>
+
+        <h3>4.3.4 Organisasi Swasta (Private Sector Organisations)</h3>
+        <p>The private sector is a key stakeholder that is expected to benefit from the digital transformation of government services. They will:</p>
+        <ul>
+          <li>Utilise the DIIP-X platform for secure data sharing and application integration with government agencies</li>
+          <li>Use the Sabah Digital ID for business transactions and interactions with the government</li>
+          <li>Contribute to the growth of Sabah's digital economy through investments and innovation</li>
+          <li>Benefit from streamlined processes for business permits, approvals, and other government interactions</li>
+        </ul>
+        <p>The private sector plays a vital role in driving economic growth and can greatly benefit from a more efficient and transparent government.</p>
+
+        <div class="callout">
+          These stakeholders, working collaboratively, are crucial for the successful implementation of the Sabah Digital Government initiatives. The state government has clearly established the need for <strong>all stakeholders</strong> to participate in these initiatives to achieve their objectives.
+        </div>
+
+      </div><!-- end page 4 -->
+
+
+      <div class="pbm">✂ &nbsp; Page break — Page 5 starts here when printed</div>
+
+
+      <!-- ══════════════════════════════════════
+           PAGE 5 — 4.4 Innovation and Experimentation Strategy
+      ══════════════════════════════════════ -->
+      <div class="sb-section">
+        <span class="badge">Page 5</span>
+
+        <h2 style="margin-top:10px;">4.4 Innovation and Experimentation Strategy</h2>
+
+        <p>To ensure Sabah remains at the forefront of digital transformation, an innovation-driven approach must be embedded into all aspects of governance and service delivery. This requires creating a safe environment for testing new technologies, experimenting with novel approaches, and scaling what works effectively.</p>
+
+        <h3>4.4.1 Key Components</h3>
+
+        <h3 style="font-size:9.5pt; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-top:10px;">Pilot Project Lifecycle Management</h3>
+
+        <table class="dt">
+          <thead>
+            <tr><th>Stage</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Idea Submission</strong></td>
+              <td>Agencies and external stakeholders can propose innovative ideas.</td>
+            </tr>
+            <tr>
+              <td><strong>Feasibility Assessment</strong></td>
+              <td>Evaluate technical, financial, and operational feasibility.</td>
+            </tr>
+            <tr>
+              <td><strong>Implementation</strong></td>
+              <td>Run small-scale pilots with measurable outcomes.</td>
+            </tr>
+            <tr>
+              <td><strong>Evaluation</strong></td>
+              <td>Use KPIs and stakeholder feedback to assess impact.</td>
+            </tr>
+            <tr>
+              <td><strong>Decision to Scale or Discontinue</strong></td>
+              <td>Based on results, decide whether to adopt, refine, or retire the initiative.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:9.5pt; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-top:14px;">Collaboration with Academia and Private Sector</h3>
+        <p>Partner with universities, research institutions, and local technology firms to co-develop prototypes and proof-of-concepts.</p>
+
+        <h3 style="font-size:9.5pt; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-top:10px;">Knowledge Sharing Platform</h3>
+        <ul>
+          <li>Create a centralised repository of lessons learned, success stories, and case studies from past pilots</li>
+          <li>Host regular workshops and forums to share insights and promote cross-agency learning</li>
+        </ul>
+
+        <h3>4.4.2 Governance and Oversight</h3>
+
+        <p>The <strong>Digital Government Division (DGD)</strong> will oversee the Innovation &amp; Experimentation Strategy. A dedicated <strong>Innovation Unit</strong> may be established within DGD to manage and coordinate pilot projects, and report findings to the Working Committee.</p>
+
+        <div class="callout">
+          By embedding an innovation-first culture into Sabah's digital governance framework, the state ensures that transformation is not a one-time event but a continuous, evolving process driven by data, experimentation, and shared learning.
+        </div>
+
+        <p class="end-mark">— End of Chapter 4: Sabah State Digital Policy —</p>
+
+      </div><!-- end page 5 -->
+
+    </div><!-- /.doc-content -->
+
+
+    <!-- ══════════════════════════════════════
+         SIDEBAR
+    ══════════════════════════════════════ -->
+    <aside class="sidebar">
+
+      <div class="sb-badge">RASMI</div>
+
+      <div class="sb-field">
+        <div class="sb-label">Dokumen</div>
+        <div class="sb-title">Sabah State Digital Policy</div>
+      </div>
+
+      <div class="sb-rule-gold"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Bab</div>
+        <div class="sb-value">4 — Sabah State Digital Policy</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Organisasi</div>
+        <div class="sb-value">Jabatan Perkhidmatan Awam Negeri Sabah</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Bahagian</div>
+        <div class="sb-value">Bahagian Kerajaan Digital</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Rujukan</div>
+        <div class="sb-value">JPANS/BKD/SDGI/004</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Tarikh</div>
+        <div class="sb-value">Mei 2025</div>
+      </div>
+
+      <div class="sb-rule"></div>
+
+      <div class="sb-field">
+        <div class="sb-label">Versi</div>
+        <div class="sb-value">1.0 (Draf)</div>
+      </div>
+
+      <div class="sb-spacer"></div>
+
+      <div class="sb-rule-gold"></div>
+      <div class="sb-footer-note">
+        Dokumen draf — tidak untuk edaran awam.<br>
+        Sabah Digital Government Innovation (SDGI) Roadmap 2020–2030.
+      </div>
+
+    </aside>
+
+  </div><!-- /.doc-wrapper -->
+
+</body>
+</html>

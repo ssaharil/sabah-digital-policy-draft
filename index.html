@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sabah State Digital Policy — Draft</title>
+  <style>
+    :root {
+      --blue:    #1a4f8a;
+      --blue-dk: #123862;
+      --blue-lt: #e8f0fb;
+      --gold:    #c8922a;
+      --text:    #1e2433;
+      --muted:   #5a6278;
+      --border:  #d6dce8;
+      --bg:      #f5f7fb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── Hero ── */
+    header {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dk) 100%);
+      color: #fff;
+      padding: 56px 40px 64px;
+      text-align: center;
+    }
+    header img.logo {
+      height: 64px;
+      margin-bottom: 18px;
+    }
+    header .label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #a8c4e8;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    header h2.subtitle {
+      font-size: 15px;
+      font-weight: 400;
+      color: #c8d8ee;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 14.5px;
+      color: #c8d8ee;
+      max-width: 640px;
+      margin: 16px auto 0;
+    }
+    .badge {
+      display: inline-block;
+      margin-top: 18px;
+      background: var(--gold);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 960px;
+      margin: -32px auto 0;
+      padding: 0 24px 60px;
+    }
+
+    /* ── Quick links bar ── */
+    .quicklinks {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(20,40,80,0.08);
+      padding: 18px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 44px;
+    }
+    .quicklinks .ql-text {
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+    .quicklinks .ql-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .ql-btn {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .ql-btn.primary { background: var(--blue); color: #fff; }
+    .ql-btn.primary:hover { background: var(--blue-dk); }
+    .ql-btn.secondary { background: var(--blue-lt); color: var(--blue); }
+    .ql-btn.secondary:hover { background: #d8e6fa; }
+
+    /* ── Section titles ── */
+    h3.section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin: 0 0 18px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--blue-lt);
+    }
+
+    /* ── Chapter grid ── */
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .chapter-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+    }
+    .chapter-card:hover {
+      box-shadow: 0 8px 20px rgba(20,40,80,0.10);
+      transform: translateY(-2px);
+      border-color: var(--blue);
+    }
+    .chapter-card .chap-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      background: var(--blue-lt);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .chapter-card .chap-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+    .chapter-card .chap-desc {
+      font-size: 13px;
+      color: var(--muted);
+      flex-grow: 1;
+    }
+    .chapter-card .chap-open {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      align-self: flex-start;
+    }
+
+    /* ── Themes ── */
+    .themes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .theme-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--blue);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .theme-card .icon { font-size: 22px; margin-bottom: 8px; }
+    .theme-card h4 { font-size: 13.5px; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
+    .theme-card p  { font-size: 13px; color: var(--muted); }
+
+    /* ── Resources ── */
+    .resources {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .resource-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .resource-card .res-text .res-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .resource-card .res-text .res-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .resource-card a.html-link {
+      flex-shrink: 0;
+      display: inline-block;
+      background: var(--blue-lt);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .resource-card a.html-link:hover { background: var(--blue); color: #fff; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 24px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="images/jpan_logo.png" alt="Jabatan Kerajaan Digital logo" />
+  <div class="label">Jabatan Kerajaan Digital · Sabah State Government</div>
+  <h1>Sabah State Digital Policy</h1>
+  <h2 class="subtitle">Sabah Digital Government Innovation (SDGI) Roadmap 2020–2030</h2>
+  <p>Automation → Innovation → Intelligence — building a data-driven, citizen-centric government guided by the 5A principle: Accessible, by Anyone, at Anytime, Anywhere, and by Any Device.</p>
+  <span class="badge">Draft — Not for Public Distribution</span>
+</header>
+
+<main>
+
+  <div class="quicklinks">
+    <div class="ql-text">Start reading from the Preface, or jump to any chapter below.</div>
+    <div class="ql-actions">
+      <a class="ql-btn primary" href="1-preface.html">Start Reading →</a>
+      <a class="ql-btn secondary" href="readme.html">Folder README &amp; Editing Guide</a>
+    </div>
+  </div>
+
+  <h3 class="section-title">Chapters</h3>
+  <div class="chapter-grid">
+
+    <a class="chapter-card" target="_blank" href="1-preface.html">
+      <span class="chap-num">1</span>
+      <span class="chap-title">Preface</span>
+      <span class="chap-desc">Foreword from the Chief Minister and State Secretary, setting out the political commitment to digital transformation and the 5A vision.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+    <a class="chapter-card" target="_blank" href="2-perspectives-on-digital-transformation.html">
+      <span class="chap-num">2</span>
+      <span class="chap-title">Perspectives on Digital Transformation</span>
+      <span class="chap-desc">Global and regional context — how leading nations and Malaysia's federal government approach digital transformation.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+    <a class="chapter-card" target="_blank" href="3-landscape-of-digital-transformation-in-sabah.html">
+      <span class="chap-num">3</span>
+      <span class="chap-title">The Landscape of Digital Transformation in Sabah</span>
+      <span class="chap-desc">Historical evolution from late-1990s ICT adoption to present-day SDGI initiatives, milestones, and challenges.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+    <a class="chapter-card" target="_blank" href="4-sabah-state-digital-policy.html">
+      <span class="chap-num">4</span>
+      <span class="chap-title">Sabah State Digital Policy</span>
+      <span class="chap-desc">The core policy statement — vision, mission, guiding principles, strategic objectives, and the 2025–2030 direction.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+    <a class="chapter-card" target="_blank" href="5-thrusts-strategies-and-initiatives.html">
+      <span class="chap-num">5</span>
+      <span class="chap-title">Thrusts, Strategies, and Initiatives</span>
+      <span class="chap-desc">Strategic thrusts: X-Road data integration, data hubs, Sabah ePass digital ID, AI adoption, cybersecurity, open data, and smart infrastructure.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+    <a class="chapter-card" target="_blank" href="6-governance-structure.html">
+      <span class="chap-num">6</span>
+      <span class="chap-title">Governance Structure</span>
+      <span class="chap-desc">Institutional framework, inter-agency coordination, and accountability structures for policy implementation.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+    <a class="chapter-card" target="_blank" href="7-citizen-engagement-strategy.html">
+      <span class="chap-num">7</span>
+      <span class="chap-title">Citizen Engagement Strategy</span>
+      <span class="chap-desc">Building public awareness, trust, and adoption of digital government services, with outreach for rural communities.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+    <a class="chapter-card" target="_blank" href="8-closing.html">
+      <span class="chap-num">8</span>
+      <span class="chap-title">Closing</span>
+      <span class="chap-desc">Concluding remarks on Sabah's digital future and the shared responsibility of government, citizens, and industry.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+    <a class="chapter-card" target="_blank" href="9-definition-and-glossary.html">
+      <span class="chap-num">9</span>
+      <span class="chap-title">Definition and Glossary</span>
+      <span class="chap-desc">Standardised definitions for key terms — AI, Blockchain, Cybersecurity, Data Hub, Digital ID, Open Data, X-Road, and more.</span>
+      <span class="chap-open">Open chapter ↗</span>
+    </a>
+
+  </div>
+
+  <h3 class="section-title">Key Themes</h3>
+  <div class="themes">
+    <div class="theme-card">
+      <div class="icon">🔗</div>
+      <h4>Data Integration</h4>
+      <p>X-Road platform for secure, seamless data exchange across all state agencies.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🪪</div>
+      <h4>Digital Identity</h4>
+      <p>Sabah ePass (Sabah Digital ID) as the foundation for citizen-facing digital services.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🤖</div>
+      <h4>AI &amp; Innovation</h4>
+      <p>Embedding artificial intelligence in public service delivery, automation, and policymaking.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🛡️</div>
+      <h4>Cybersecurity</h4>
+      <p>Protecting government systems, citizen data, and critical digital infrastructure.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">📂</div>
+      <h4>Open Data</h4>
+      <p>Publishing government datasets to drive transparency, research, and innovation.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🌐</div>
+      <h4>Inclusion</h4>
+      <p>Bridging the digital divide for rural and underserved communities across Sabah.</p>
+    </div>
+  </div>
+
+  <h3 class="section-title">Other Resources</h3>
+  <div class="resources">
+    <div class="resource-card">
+      <div class="res-text">
+        <div class="res-title">README &amp; Editing Guide</div>
+        <div class="res-desc">Folder structure, document overview, editing workflow</div>
+      </div>
+      <a class="html-link" target="_blank" href="readme.html">Open ↗</a>
+    </div>
+    <div class="resource-card">
+      <div class="res-text">
+        <div class="res-title">Change Log</div>
+        <div class="res-desc">Tracks edits made to working drafts</div>
+      </div>
+      <a class="html-link" target="_blank" href="digitalpolicy_draft/digitalpolicy_change_log.html">Open ↗</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Sabah Digital Government Innovation (SDGI) · Digital Government Division · Sabah State Public Service Department<br>
+  Draft document — generated homepage · June 2026
+</footer>
+
+</body>
+</html>
